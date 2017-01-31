@@ -8,3 +8,7 @@ Command line programms receive their parameters through command line. For exampl
 HOW TO USE
 
 2do
+
+HOW TO TEST
+
+2do
