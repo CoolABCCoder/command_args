@@ -1,10 +1,18 @@
-// Test module for command_args processing class
-// (c) 2017, coolabccoder@gmail.com
+#include "stdafx.h"
+#include "CppUnitTest.h"
 
-#include "../command_args/command_args.h"
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-int main(int argc, char **argv)
-{
+namespace command_args_test
+{		
+	TEST_CLASS(CommandArgsTest)
+	{
+	public:
+		
+		TEST_METHOD(TestMethod1)
+		{
+			// TODO: Your test code here
+		}
 
-	return 0;
+	};
 }

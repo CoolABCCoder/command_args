@@ -1,6 +1,6 @@
 #pragma once
 
-// (c) 2017, coolabccoder@gmail.com
+// (c) 2017 by Cool ABC Coder <coolabccoder@gmail.com>
 
 /// Class COMMAND_OPTION presents a description for a single command line parameter, i.e. -h or --help or -v or --version 
 class COMMAND_OPTION
