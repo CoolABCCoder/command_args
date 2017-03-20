@@ -6,7 +6,6 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-
 namespace command_args_test
 {		
 	TEST_CLASS(CommandOptionTest)
@@ -35,8 +34,8 @@ namespace command_args_test
 			Assert::AreEqual(strlen(testShortNames), strlen(commandOption->getShortNames()), L"COMMAND_OPTION.shortNames wrong length");
 			Assert::AreEqual(0, memcmp(testShortNames, commandOption->getShortNames(), strlen(commandOption->getShortNames())), L"COMMAND_OPTION.shortNames wrong value");
 
-			Assert::AreEqual(strlen(testLongName), strlen(commandOption->getLongNames()), L"COMMAND_OPTION.longNames wrong length");
-			Assert::AreEqual(0, memcmp(testLongName, commandOption->getLongNames(), strlen(commandOption->getLongNames())), L"COMMAND_OPTION.longNames wrong value");
+			Assert::AreEqual(strlen(testLongName), strlen(commandOption->getLongName()), L"COMMAND_OPTION.longNames wrong length");
+			Assert::AreEqual(0, memcmp(testLongName, commandOption->getLongName(), strlen(commandOption->getLongName())), L"COMMAND_OPTION.longNames wrong value");
 
 			Assert::AreEqual(strlen(testDescription), strlen(commandOption->getDescription()), L"COMMAND_OPTION.description wrong length");
 			Assert::AreEqual(0, memcmp(testDescription, commandOption->getDescription(), strlen(commandOption->getDescription())), L"COMMAND_OPTION.description wrong value");
@@ -64,7 +63,7 @@ namespace command_args_test
 	{
 	public:
 		// Test COMMAND_ARGS constructor
-		/// <summary>Test COMMAND_ARGS constructor method</summary
+		/// <summary>Test COMMAND_ARGS constructor method</summary>
 		TEST_METHOD(COMMAND_ARGS_CONSTRUCTOR_DESTRUCTOR)
 		{
 			COMMAND_ARGS *commandArgs;
@@ -121,7 +120,7 @@ namespace command_args_test
 			commandArgs->AddOption(testShortNamesVersion, testLongNameVersion, testNeedValue, testDescriptionHelp); // same descrition
 			Assert::AreEqual(1, commandArgs->OptionsCount(), L"In commandArgs added wrong option (repetition of long name)");
 
-			commandArgs->AddOption(testShortNamesVersion, testLongNameVersion, testNeedValue, testDescriptionVersion); // same long name
+			commandArgs->AddOption(testShortNamesVersion, testLongNameVersion, testNeedValue, testDescriptionVersion); // new option
 			Assert::AreEqual(2, commandArgs->OptionsCount(), L"In commandArgs new option not added");
 
 			delete commandArgs;

@@ -1,14 +1,15 @@
 // (c) 2017 by Cool ABC Coder <coolabccoder@gmail.com>
 #pragma once
 
-#include <list>
+#include <vector>
 
 using namespace std;
 
 /// Class COMMAND_OPTION presents a description for a single command line parameter, i.e. -h or --help or -v or --version 
+/// TODO: This class is not for export
 class COMMAND_OPTION
 {
-private: 
+private:
 	/// <summary>Option short descriptions.
 	/// <para>Just write in " " all the symbols, you want to describe your option.</para>  
 	/// <seealso cref="COMMAND_OPTION::longName"/>  
@@ -58,17 +59,19 @@ public:
 	COMMAND_OPTION();
 	~COMMAND_OPTION();
 	char* getShortNames() { return this->shortNames; };
-	char* getLongNames() { return this->longName; };
+	char* getLongName() { return this->longName; };
 	char* getDescription() { return this->description; };
 	bool getNeedValue() { return this->needValue; };
 };
+
+
 
 /// <summary>Class, containing and processing command options</summary>
 class COMMAND_ARGS
 {
 private:
 	/// <summary>List with command options.</summary>
-	list <COMMAND_OPTION*> commandOptions;
+	vector <COMMAND_OPTION*> commandOptions;
 
 public:
 	COMMAND_ARGS();

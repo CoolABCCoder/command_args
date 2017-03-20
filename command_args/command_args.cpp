@@ -3,6 +3,7 @@
 
 #include "command_args.h"
 
+
 COMMAND_ARGS::COMMAND_ARGS()
 {
 	
@@ -16,10 +17,28 @@ COMMAND_ARGS::~COMMAND_ARGS()
 	{
 		delete commandOption;
 	}
+	this->commandOptions.clear();
+
+
 }
 
 void COMMAND_ARGS::AddOption(const char * aShortNames, const char * aLongName, const bool aNeedValue, const char * aDescription)
 {
+	char *p;
+	for (auto option : this->commandOptions)
+	{
+		if (!strcmp(option->getDescription(), aDescription))
+			return; // Repeated description - no addition;
+		if (!strcmp(option->getLongName(), aLongName))
+			return; // Repeated description - no addition;
+		p = (char *) aShortNames;
+		while (*p) 
+		{
+			if (strchr(option->getShortNames(), *p)) // some symbols in aShortNames allready used
+				return;
+			p++;
+		}
+	}
 	this->commandOptions.push_back(new COMMAND_OPTION(aShortNames, aLongName, aNeedValue, aDescription));
 }
 
@@ -50,6 +69,7 @@ void COMMAND_OPTION::SetMemberStringValue(char **aMember, const char *aMemberVal
 COMMAND_OPTION::COMMAND_OPTION(const char *aShortNames, const char *aLongName, const bool aNeedValue, const char *aDescription)
 	:COMMAND_OPTION()
 {
+	// TODO: prepare aShortNames - should not have repeating symbols
 	SetMemberStringValue(&(this->shortNames), aShortNames);
 	SetMemberStringValue(&(this->longName), aLongName);
 	SetMemberStringValue(&(this->description), aDescription);
