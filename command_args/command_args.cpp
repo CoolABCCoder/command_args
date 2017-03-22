@@ -16,8 +16,22 @@ COMMAND_ARGS::~COMMAND_ARGS()
 		delete commandOption;
 	}
 	this->commandOptions.clear();
+}
 
+COMMAND_ARGS::COMMAND_ARGS(vector<COMMAND_OPTION*> aCommandOptions)
+{
+	for (auto commandOption : aCommandOptions)
+	{
+		this->AddOption(*commandOption);
+	}
+}
 
+COMMAND_ARGS::COMMAND_ARGS(vector<COMMAND_OPTION> aCommandOptions)
+{
+	for (auto commandOption : aCommandOptions)
+	{
+		this->AddOption(commandOption);
+	}
 }
 
 COMMAND_OPTION* COMMAND_ARGS::AddOption(const string aShortNames, const string aLongName, const bool aNeedValue, const string aDescription)
@@ -39,10 +53,15 @@ COMMAND_OPTION* COMMAND_ARGS::AddOption(const string aShortNames, const string a
 
 }
 
-COMMAND_OPTION* COMMAND_ARGS::AddOption(const char * aShortNames, const char * aLongName, const bool aNeedValue, const char * aDescription)
+COMMAND_OPTION* COMMAND_ARGS::AddOption(const char* aShortNames, const char* aLongName, const bool aNeedValue, const char* aDescription)
 {
 	return this->AddOption(string(aShortNames), string(aLongName), aNeedValue, string(aDescription));
 	
+}
+
+COMMAND_OPTION* COMMAND_ARGS::AddOption(const COMMAND_OPTION& aCommandOption)
+{
+	return this->AddOption(aCommandOption.getShortNames(), aCommandOption.getLongName(), aCommandOption.getNeedValue(), aCommandOption.getDescription());
 }
 
 COMMAND_OPTION::COMMAND_OPTION()
@@ -61,7 +80,7 @@ COMMAND_OPTION::~COMMAND_OPTION()
 	delete[] this->description;
 }
 
-void COMMAND_OPTION::SetMemberStringValue(char **aMember, const char *aMemberValue)
+void COMMAND_OPTION::SetMemberStringValue(char** aMember, const char* aMemberValue)
 {
 	int tmpStrLen;
 
@@ -93,8 +112,9 @@ COMMAND_OPTION::COMMAND_OPTION(const string aShortNames, const string aLongName,
 
 }
 
-COMMAND_OPTION::COMMAND_OPTION(const char *aShortNames, const char *aLongName, const bool aNeedValue, const char *aDescription)
+COMMAND_OPTION::COMMAND_OPTION(const char* aShortNames, const char* aLongName, const bool aNeedValue, const char* aDescription)
 	:COMMAND_OPTION(string(aShortNames), string(aLongName), aNeedValue, string(aDescription))
 {
 	
 }
+

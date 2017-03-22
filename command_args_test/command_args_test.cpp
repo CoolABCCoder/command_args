@@ -146,6 +146,22 @@ namespace command_args_test
 
 		}
 
+		TEST_METHOD(COMMAND_ARGS_ADD_OPTION_VECTOR)
+		{
+			// That is how create options
+
+			auto commandArgs = COMMAND_ARGS({ COMMAND_OPTION("hH", "help", false, "Print this help screen and exit"),
+				COMMAND_OPTION("vV", "version", false, "Print version screen and exit"),
+				COMMAND_OPTION("tT", "test", false, "Do some tests") });
+			
+
+			Assert::AreEqual(3, commandArgs.OptionsCount(), L"Constructor with options in parameters error");
+
+
+			
+
+		}
+
 
 
 	};
