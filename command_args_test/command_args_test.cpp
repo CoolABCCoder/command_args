@@ -5,6 +5,7 @@
 #include "../command_args/command_args.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace CommandArgs;
 
 namespace command_args_test
 {		
@@ -96,7 +97,7 @@ namespace command_args_test
 
 		TEST_METHOD(COMMAND_ARGS_ADD_OPTION)
 		{
-			COMMAND_ARGS *commandArgs;
+			auto commandArgs = new COMMAND_ARGS;
 			const char testShortNamesHelp[] = "hH";
 			const char testShortNamesRepeat[] = "H";
 			const char testShortNamesVersion[] = "vV";
@@ -107,7 +108,7 @@ namespace command_args_test
 			const char testDescriptionVersion[] = "Print version screen and exit";
 			const bool testNeedValue = false;
 
-			commandArgs = new COMMAND_ARGS;
+			//commandArgs = new COMMAND_ARGS;
 			commandArgs->AddOption(testShortNamesHelp, testLongNameHelp, testNeedValue, testDescriptionHelp);
 			commandArgs->AddOption(testShortNamesHelp, testLongNameVersion, testNeedValue, testDescriptionVersion);
 			commandArgs->AddOption(testShortNamesRepeat, testLongNameVersion, testNeedValue, testDescriptionVersion);
@@ -122,6 +123,24 @@ namespace command_args_test
 
 			commandArgs->AddOption(testShortNamesVersion, testLongNameVersion, testNeedValue, testDescriptionVersion); // new option
 			Assert::AreEqual(2, commandArgs->OptionsCount(), L"In commandArgs new option not added");
+
+			delete commandArgs;
+
+		}
+
+		TEST_METHOD(COMMAND_ARGS_ADD_OPTION_DUPLICATED_SIMBOLS_IN_SHORT_NAMES)
+		{
+			auto commandArgs = new COMMAND_ARGS;
+			const string testShortNamesHelp("hHh"s);
+			const string testLongNameHelp("help"s);
+			const string testDescriptionHelp("Print help screen and exit"s);
+			const bool testNeedValue = false;
+
+			//commandArgs = new COMMAND_ARGS;
+			auto addedOption = commandArgs->AddOption(testShortNamesHelp, testLongNameHelp, testNeedValue, testDescriptionHelp);
+			
+			Assert::AreEqual(0, string("hH"s).compare(addedOption->getShortNames()), L"Short name were not deduplicated");
+
 
 			delete commandArgs;
 

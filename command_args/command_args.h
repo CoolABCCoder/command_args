@@ -1,7 +1,14 @@
 // (c) 2017 by Cool ABC Coder <coolabccoder@gmail.com>
 #pragma once
 
+#ifndef _COMMAND_ARGS_H_
+#define _COMMAND_ARGS_H_
+
 #include <vector>
+#include <string>
+
+namespace CommandArgs
+{
 
 using namespace std;
 
@@ -56,6 +63,7 @@ public:
 	/// <param name="aDescription">Value for description<seealso cref="COMMAND_OPTION::description"/></param>
 	/// </summary>
 	COMMAND_OPTION(const char *aShortNames, const char *aLongName, const bool aNeedValue, const char *aDescription);
+	COMMAND_OPTION(const string aShortNames, const string aLongName, const bool aNeedValue, const string aDescription);
 	COMMAND_OPTION();
 	~COMMAND_OPTION();
 	char* getShortNames() { return this->shortNames; };
@@ -84,7 +92,14 @@ public:
 	/// <param name="aNeedValue">Value for needValue<seealso cref="COMMAND_OPTION::needValue"/></param>
 	/// <param name="aDescription">Value for description<seealso cref="COMMAND_OPTION::description"/></param>
 	/// </summary>
-	void AddOption(const char *aShortNames, const char *aLongName, const bool aNeedValue, const char *aDescription);
+	COMMAND_OPTION* AddOption(const char *aShortNames, const char *aLongName, const bool aNeedValue, const char *aDescription);
+	COMMAND_OPTION* AddOption(const string aShortNames, const string aLongName, const bool aNeedValue, const string aDescription);
+
+	
 	/// Count of elements in list COMMAND_ARGS::commandOptions
 	int OptionsCount() { return this->commandOptions.size(); };
 };
+
+}
+
+#endif
