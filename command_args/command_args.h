@@ -24,13 +24,13 @@ private:
 	/// </summary>
 	/// <example> You can use "hH" for <c>-h -H --help</c>, for example.  
 	/// </example> 
-	char* shortNames;
+	string shortNames;
 
 	/// <summary>Option long description.
 	/// <para>Just write in " " all the symbols, you want to describe your option.</para>  
 	/// <seealso cref="COMMAND_OPTION::shortNames"/>  
 	/// </summary>
-	char* longName;
+	string longName;
 
 	/// <summary>Flag denotes, if this option needs a value.
 	/// <para>Default value is false.</para>  
@@ -43,13 +43,13 @@ private:
 	/// </summary>
 	/// <example> You can specify, that your option <c>--help</c> means <c>"Print this help screen and exit"</c>.  
 	/// </example> 
-	char* description;
+	string description;
 
 	/// <summary> Set member to new value.
 	/// <param name="aMember">Pointer to member <c>char*</c> field</param>
 	/// <param name="aMemberValue">Value of member field</param>
 	/// </summary>
-	void SetMemberStringValue(char** aMember, const char* aMemberValue);
+	void SetMemberStringValue(string& aMember, const string& aMemberValue);
 
 public:
 	/// COMMAND_OPTION constructor
@@ -63,14 +63,13 @@ public:
 	/// <param name="aNeedValue">Value for needValue<seealso cref="COMMAND_OPTION::needValue"/></param>
 	/// <param name="aDescription">Value for description<seealso cref="COMMAND_OPTION::description"/></param>
 	/// </summary>
-	COMMAND_OPTION(const char* aShortNames, const char* aLongName, const bool aNeedValue, const char* aDescription);
-	COMMAND_OPTION(const string aShortNames, const string aLongName, const bool aNeedValue, const string aDescription);
+	COMMAND_OPTION(const string& aShortNames, const string& aLongName, const bool aNeedValue, const string& aDescription);
 	COMMAND_OPTION();
 	~COMMAND_OPTION();
-	char* getShortNames() const { return this->shortNames; };
-	char* getLongName() const { return this->longName; };
-	char* getDescription() const { return this->description; };
-	bool getNeedValue() const  { return this->needValue; };
+	const string& getShortNames() const { return this->shortNames; };
+	const string& getLongName() const { return this->longName; };
+	const string& getDescription() const { return this->description; };
+	const bool getNeedValue() const  { return this->needValue; };
 };
 
 
@@ -87,36 +86,28 @@ public:
 	/// <simmary>Constructor with all parameters in it
 	/// <param name="aCommandOptions">Vector of Command options</param>
 	/// </summary>
-	COMMAND_ARGS(vector<COMMAND_OPTION> aCommandOptions);
+	COMMAND_ARGS(const vector<COMMAND_OPTION>& aCommandOptions);
 	/// <simmary>Constructor with all parameters in it
 	/// <param name="aCommandOptions">Vector of Command options</param>
 	/// </summary>
-	COMMAND_ARGS(vector<COMMAND_OPTION*> aCommandOptions);
+	COMMAND_ARGS(const vector<COMMAND_OPTION*>& aCommandOptions);
 	~COMMAND_ARGS();
-	/// <summary>Add command option to list COMMAND_ARGS::commandOptions
-	/// <para>TODO: Check, if such a option allready exists</para>
-	// TODO: Check, if such a option allready exists
-	/// <param name="aShortNames">Value for shortNames<seealso cref="COMMAND_OPTION::shortNames"/></param>
-	/// <param name="aLongName">Value for longNames<seealso cref="COMMAND_OPTION::longName"/></param>
-	/// <param name="aNeedValue">Value for needValue<seealso cref="COMMAND_OPTION::needValue"/></param>
-	/// <param name="aDescription">Value for description<seealso cref="COMMAND_OPTION::description"/></param>
-	/// </summary>
-	COMMAND_OPTION* AddOption(const char* aShortNames, const char* aLongName, const bool aNeedValue, const char* aDescription);
 	/// <summary>Add command option to list COMMAND_ARGS::commandOptions with string parameters.
 	/// <param name="aShortNames">Value for shortNames<seealso cref="COMMAND_OPTION::shortNames"/></param>
 	/// <param name="aLongName">Value for longNames<seealso cref="COMMAND_OPTION::longName"/></param>
 	/// <param name="aNeedValue">Value for needValue<seealso cref="COMMAND_OPTION::needValue"/></param>
 	/// <param name="aDescription">Value for description<seealso cref="COMMAND_OPTION::description"/></param>
 	/// </summary>
-	COMMAND_OPTION* AddOption(const string aShortNames, const string aLongName, const bool aNeedValue, const string aDescription);
+	const COMMAND_OPTION* AddOption(const string& aShortNames, const string& aLongName, const bool aNeedValue, const string& aDescription);
 	/// <summary>Add command option to list COMMAND_ARGS::commandOptions for usage in 
 	/// <param name="aCommandOption">Option to add<seealso cref="COMMAND_OPTION"/></param>
 	/// </summary>
-	COMMAND_OPTION* AddOption(const COMMAND_OPTION& aCommandOption);
+	const COMMAND_OPTION* AddOption(const COMMAND_OPTION& aCommandOption);
 
 	
 	/// Count of elements in list COMMAND_ARGS::commandOptions
-	int OptionsCount() { return this->commandOptions.size(); };
+	int OptionsCount();
+	const COMMAND_OPTION* Option(int i);
 };
 
 }

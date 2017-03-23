@@ -32,14 +32,14 @@ namespace command_args_test
 			{
 				Assert::Fail(L"COMMAND_OPTION constructor error");
 			}
-			Assert::AreEqual(strlen(testShortNames), strlen(commandOption->getShortNames()), L"COMMAND_OPTION.shortNames wrong length");
-			Assert::AreEqual(0, memcmp(testShortNames, commandOption->getShortNames(), strlen(commandOption->getShortNames())), L"COMMAND_OPTION.shortNames wrong value");
+			Assert::AreEqual(strlen(testShortNames), commandOption->getShortNames().size(), L"COMMAND_OPTION.shortNames wrong length");
+			Assert::AreEqual(0, commandOption->getShortNames().compare(testShortNames), L"COMMAND_OPTION.shortNames wrong value");
 
-			Assert::AreEqual(strlen(testLongName), strlen(commandOption->getLongName()), L"COMMAND_OPTION.longNames wrong length");
-			Assert::AreEqual(0, memcmp(testLongName, commandOption->getLongName(), strlen(commandOption->getLongName())), L"COMMAND_OPTION.longNames wrong value");
+			Assert::AreEqual(strlen(testLongName), commandOption->getLongName().size(), L"COMMAND_OPTION.longNames wrong length");
+			Assert::AreEqual(0, commandOption->getLongName().compare(testLongName), L"COMMAND_OPTION.longNames wrong value");
 
-			Assert::AreEqual(strlen(testDescription), strlen(commandOption->getDescription()), L"COMMAND_OPTION.description wrong length");
-			Assert::AreEqual(0, memcmp(testDescription, commandOption->getDescription(), strlen(commandOption->getDescription())), L"COMMAND_OPTION.description wrong value");
+			Assert::AreEqual(strlen(testDescription), commandOption->getDescription().size(), L"COMMAND_OPTION.description wrong length");
+			Assert::AreEqual(0, commandOption->getDescription().compare(testDescription), L"COMMAND_OPTION.description wrong value");
 
 			Assert::AreEqual(testNeedValue, commandOption->getNeedValue(), L"COMMAND_OPTION.needValue wrong value");
 
@@ -150,16 +150,27 @@ namespace command_args_test
 		{
 			// That is how create options
 
-			auto commandArgs = COMMAND_ARGS({ COMMAND_OPTION("hH", "help", false, "Print this help screen and exit"),
-				COMMAND_OPTION("vV", "version", false, "Print version screen and exit"),
+			auto commandArgs = COMMAND_ARGS({ COMMAND_OPTION("hH"s, "help"s, false, "Print this help screen and exit"s),
+				COMMAND_OPTION("vV"s, "version"s, false, "Print version screen and exit"s),
 				COMMAND_OPTION("tT", "test", false, "Do some tests") });
 			
 
-			Assert::AreEqual(3, commandArgs.OptionsCount(), L"Constructor with options in parameters error");
+			Assert::AreEqual(3, commandArgs.OptionsCount(), L"Constructor with options in parameters error");		
 
+		}
 
-			
+		TEST_METHOD(COMMAND_ARGS_TEST_STRING_VISIBILITY)
+		{
+			// That is how create options
+			string shortNames("hH"s);
 
+			auto commandArgs = COMMAND_ARGS({ COMMAND_OPTION(shortNames, "help"s, false, "Print this help screen and exit"s),
+				COMMAND_OPTION("vV"s, "version"s, false, "Print version screen and exit"s),
+				COMMAND_OPTION("tT", "test", false, "Do some tests") });
+
+			shortNames = "vV"s; // Changed string
+
+			Assert::AreEqual(0, commandArgs.Option(4)->getShortNames().compare("hH"s), L"Changin member from stack");
 		}
 
 
